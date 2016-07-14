@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<pluginInfo xmlns="http://www.urbancode.com/InfoXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--
+  
+  **author name IS required**
+  
+  The Author Section is used to give credit to the author of the plugin.
+  Name is the only required element/attribute, but feel free to also include your email, 
+  website  or bio to allow users of your plugin to praise your work, ask questions 
+  or share their use case to help grow your plugin's functionality. 
+  -->
+  
+  <author name="Tyson Lawrie and Glen Hickman">
+    <organization>IBM</organization>
+    <email/>
+    <website/>
+    <bio/>
+  </author>
+  
+  <!--
+  
+  **intergration type IS Required**
+  
+  The integration type section identifies where the plugin fits into the process
+  excepted types are SCM, Build, Artifact, Automation, Deploy 
+  
+  For example:
+  
+  The plugin pulls Artifacts from an artifact repository during deployment
+  the Type would be "Artifact"
+  or 
+  The plugin deploys to a middleware server 
+  the Type would be "Deploy"
+  -->
+  
+  <integration type="Deploy"/>
+  
+  
+  <!-- 
+  **source is NOT required**
+  
+  The source section identifies the location of the plugin source code
+  For example 
+  https://github.com/...
+  -->
+  <!--
+  <source url=""/>
+  -->
+  <!-- 
+  **license type is NOT required**
+  
+  If your plugin uses any licensed software please acknowledge it by 
+  listing the license type below  
+  -->
+  <!--
+  <licenses>
+    <license type=""/>
+  </licenses>
+  -->
+  <!-- 
+  **tool-description IS required**
+  
+  The tool-description section is used to summarize the software 
+  the plugin was created to integrate with. 
+  
+  For example: 
+  Apache Ant is a software tool to automate software processes during the build or 
+  deployment of an application. Ant uses an propitiatory XML file to define build 
+  and/or deployment steps(referred to as targets by ant) . The Ant executable is 
+  called to execute the targets in the build.xml.
+  -->
+  
+  <tool-description>MobileFirst MaaS360 Integration via Web Services.</tool-description>
+  
+  <!-- 
+  **related-info is NOT required**
+  
+  The releated-info section is used to define links which may be useful to users of the plugin 
+  but don't fall into the release-notes or tool-description section. 
+  
+  For example: releated-info can be links to pdf documentation, help videos related to plugin setup or the product's
+  website.
+  
+  excepted values for type include: PDF, WEBSITE, VIDEO  
+  -->
+  <!--
+  <related-info>
+    <link title="" type="" description="" url =""/>
+  </related-info>
+  -->
+  <!-- 
+  **meta-html in NOT required**
+  
+  The meta-html section is used define the meta description and the meta keywords of the plugin page.The meta 
+  description tag allows you to influence the description of your page in the web crawlers that support the 
+  tag The meta keywords tag allows   you to provide additional text for crawler-based search engines to index 
+  along with your body copy. 
+  
+  If multiple keywords are used they must be comma(,) delimited   
+  -->  
+  
+  <meta-html>
+    <meta content="" name="description"/>
+    <meta content="" name="keywords"/>  
+  </meta-html>
+    
+  <release-version>24</release-version>  
+    
+  <release-notes>
+    <!--
+      **release-note IS required**
+      
+      The plugin-version name must match the plugin version found in the plugin.xml file 
+      
+      The release-note should document the changes, improvements, or bug fixes introduced 
+      with the new plugin version 
+        
+      The release-note may contain text or reference a file in the plugin zip package
+      
+      For example your release note could be:
+      Support for was added for version 10.0 for software X
+      or 
+      releaseNotes/release1.html (where release1.html contains html formatted version information)
+      -->
+      
+	  <release-note plugin-version="1">
+		1.0 - Initial release of the plugin with a step to make Authentication and HTTP calls.
+	  </release-note>
+	  <release-note plugin-version="2">
+		2.0 - Fixed the classes import
+	  </release-note>
+	  <release-note plugin-version="3">
+		3.0 - Added new step upgradeIPA
+	  </release-note>
+	  <release-note plugin-version="4">
+		4.0 - Added new step upgradeIPAandAuthenticate
+	  </release-note>
+	  <release-note plugin-version="5">
+		5.0 - Added Bundle ID to step upgradeIPAandAuthenticate
+		5.1 - Compiled java classes for com.mobilefirst.fiberlink
+		5.2 - Cleaned JAR references
+	  </release-note>
+	  <release-note plugin-version="6">
+		6.0 - Made auth_token hidden and if hidden, go get new token
+	  </release-note>
+	  <release-note plugin-version="7">
+		7.0 - Added new step distributeApp
+	  </release-note>
+	  <release-note plugin-version="8">
+		8.0 - Fixed up Distribute App UI
+	  </release-note>
+	  <release-note plugin-version="9">
+		9.0 - Fixed up Distribute App UI
+	  </release-note>
+	  <release-note plugin-version="10">
+		10.0 - Added new step getDeviceGroups
+	  </release-note>
+	  <release-note plugin-version="11">
+		11.0 - Added default post processing script 
+	  </release-note>
+	  <release-note plugin-version="12">
+		12.0 - Removed Upgrade IPA and Authenticate
+	  </release-note>
+	  <release-note plugin-version="13">
+		13.0 - Added Add iOS Enterprise App
+		13.1 - Fixed up webservice import
+		13.2 - Fixed default properties in addiOSApp
+	  </release-note>
+	  <release-note plugin-version="14">
+		14.0 - Fixed Add iOS Enterprise App
+	  </release-note>
+	  <release-note plugin-version="15">
+		15.0 - New API and Step to support creating a new sub version of an App on the Store
+		15.1 - Fixed the link to upgradeAppPlus in the plugin.xml
+	  </release-note>
+	  <release-note plugin-version="16">
+		16.0 - Added the support for creating a new sub version of the app to upgradeApp
+	  </release-note>
+	  <release-note plugin-version="17">
+		17.0 - Updated with latest Jan 2016 API additions for managing additional versions
+	  </release-note>
+	  <release-note plugin-version="18">
+		18.0 - Fixed UI requirements
+	  </release-note>
+	  <release-note plugin-version="19">
+		19.0 - Fixed UI requirements
+		19.1 - Fixed App Attribute variable in code
+		19.2 - Attempting to not populate xml if null or empty fields
+	  </release-note>
+	  <release-note plugin-version="20">
+		20.0 - Added App Attributes to Add iOS App
+	  </release-note>
+	  <release-note plugin-version="21">
+		21.0 - Added MaaS360 Hosted plugin element to Add iOS App
+	  </release-note>
+	  <release-note plugin-version="22">
+		22.0 - Added MaaS360 removeApp and removeData elements to Add iOS App
+	  </release-note>
+	  <release-note plugin-version="23">
+		23.0 - Added ADP options to Add iOS App
+	  </release-note>
+	  <release-note plugin-version="24">
+		24.0 - Refactored java fiberlink code
+	  </release-note>
+  </release-notes>
+</pluginInfo>

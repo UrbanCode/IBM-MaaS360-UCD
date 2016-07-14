@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin-upgrade xmlns="http://www.urbancode.com/UpgradeXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- The purpose of plugin.xml is to provide upgrade paths when the plugin version is changed.
+       If the upgrade paths are specified correctly, users will be upgraded to the new version 
+       without interruption. -->
+	<migrate to-version="2">
+		<migrate-command name="Request Authentication"/>
+	</migrate>
+	<migrate to-version="3">
+		<migrate-command name="Request Authentication"/>
+	</migrate>
+	<migrate to-version="5">
+		<migrate-command name="Authenticate and Upgrade APP"/>
+	</migrate>
+	<migrate to-version="6">
+		<migrate-command name="Authenticate and Upgrade APP"/>
+		<migrate-command name="Upgrade APP"/>
+	</migrate>
+	<migrate to-version="7">
+		<migrate-command name="Upgrade APP"/>
+	</migrate>
+	<migrate to-version="8">
+		<migrate-command name="Distribute APP"/>
+	</migrate>
+	<migrate to-version="9">
+		<migrate-command name="Distribute APP"/>
+	</migrate>
+	<migrate to-version="10">
+		<migrate-command name="Get Device Groups"/>
+	</migrate>
+	<migrate to-version="11">
+		<migrate-command name="Request Authentication"/>
+	</migrate>
+	<migrate to-version="12">
+		<migrate-command name="Request Authentication"/>
+	</migrate>
+	<migrate to-version="13">
+		<migrate-command name="Upgrade APP"/>
+	</migrate>
+	<migrate to-version="14">
+		<migrate-command name="Upgrade APP"/>
+	</migrate>
+	<migrate to-version="16">
+		<migrate-command name="Upgrade APP"/>
+	</migrate>
+	<migrate to-version="17">
+		<migrate-command name="Upgrade APP"/>
+		<migrate-command name="Upgrade APP Plus"/>
+	</migrate>
+	<migrate to-version="18">
+		<migrate-command name="Upgrade APP"/>
+		<migrate-command name="Upgrade APP Plus"/>
+	</migrate>
+	<migrate to-version="19">
+		<migrate-command name="Upgrade App"/>
+		<migrate-command name="Upgrade App Plus"/>
+	</migrate>
+	<migrate to-version="20">
+		<migrate-command name="Add iOS Mobile App"/>
+	</migrate>
+	<migrate to-version="21">
+		<migrate-command name="Add iOS Mobile App"/>
+	</migrate>
+	<migrate to-version="22">
+		<migrate-command name="Add iOS Mobile App"/>
+	</migrate>
+	<migrate to-version="23">
+		<migrate-command name="Add iOS Mobile App"/>
+	</migrate>
+	<migrate to-version="24">
+		<migrate-command name="Request Authentication"/>
+		<migrate-command name="Upgrade App"/>
+		<migrate-command name="Upgrade App Plus"/>
+		<migrate-command name="Add iOS Mobile App"/>
+		<migrate-command name="Distribute APP"/>
+		<migrate-command name="Get Device Groups"/>
+		<migrate-command name="Get App Details"/>
+		<migrate-command name="Mark As Primary"/>
+	</migrate>
+</plugin-upgrade>
