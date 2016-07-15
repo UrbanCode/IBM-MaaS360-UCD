@@ -87,4 +87,6 @@
 		<migrate-command name="Get App Details"/>
 		<migrate-command name="Mark As Primary"/>
 	</migrate>
+    <migrate to-version="25">
+    </migrate>
 </plugin-upgrade>

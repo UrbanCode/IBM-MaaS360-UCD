@@ -115,7 +115,7 @@
     <meta content="" name="keywords"/>  
   </meta-html>
     
-  <release-version>24</release-version>  
+  <release-version>25.0.0</release-version>  
     
   <release-notes>
     <!--
@@ -212,6 +212,9 @@
 	  </release-note>
 	  <release-note plugin-version="24">
 		24.0 - Refactored java fiberlink code
+	  </release-note>
+	  <release-note plugin-version="25">
+		25.0.0 - Community GitHub Release
 	  </release-note>
   </release-notes>
 </pluginInfo>

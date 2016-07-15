@@ -22,7 +22,7 @@ This plugin is protected under the [Eclipse Public 1.0 License](http://www.eclip
 	your own changes to the plugin.
 
 ### History
-    Version 24.0.0
+    Version 25.0.0
         Community GitHub Release
  
 ### Compiling Source

@@ -12,7 +12,7 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.MAAS360" name="IBM MaaS360" version="24"/>
+    <identifier id="com.ibm.mobilefirst.MAAS360" name="IBM MaaS360" version="25"/>
     <description>
       Various functionality related to integrating with MaaS360 via Web Services, such as authenticating, upgrading and retrieving app details.
 	  </description>
