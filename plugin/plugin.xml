@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+/**
+ * © Copyright IBM Corporation 2016.  
+ * This is licensed under the following license.
+ * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
+ * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+ */
+
+-->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.MAAS360Utilities" name="MaaS360 Utilities" version="24"/>
+    <identifier id="com.ibm.mobilefirst.MAAS360" name="IBM MaaS360" version="24"/>
     <description>
-      Utilities related to integrating with MaaS360 via Web Services, such as Authenticating.
+      Various functionality related to integrating with MaaS360 via Web Services, such as authenticating, upgrading and retrieving app details.
 	  </description>
-    <tag>MobileFirst/MaaS360 Utilities</tag>
+    <tag>Mobile/IBM MaaS360</tag>
   </header>
   <step-type name="Request Authentication">
     <description>Sends an HTTP call to a URL for Authentication Token</description>
@@ -68,7 +78,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="sendAuthenticationCall.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -130,7 +140,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="upgradeAPP.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -189,7 +199,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="upgradeAppPlus.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -269,7 +279,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="addiOSAPP.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -322,7 +332,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="distributeAPP.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -354,7 +364,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="getDeviceGroups.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -392,7 +402,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="getAppDetails.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -433,7 +443,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="markAsPrimary.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
