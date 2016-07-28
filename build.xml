@@ -11,10 +11,6 @@
 
     <project name="plugin-mobilefirst-MaaS360" default="main" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-        <property name="project" value="" />
-        <property name="version" value="dev" />
-        <property name="deployPluginArchiveName" value="releases/IBM-MaaS360-UCD-v${version}.zip" />
-
         <property name="src.dir" value="${basedir}/src" />
         <property name="build.dir" value="${basedir}/build" />
         <property name="plugin.dir" value="${basedir}/plugin" />
@@ -27,6 +23,9 @@
         <property name="lib.test.dir" value="${lib.dir}/test" />
         <property name="scripts.dir" value="${basedir}/scripts" />
         <property name="imports.dir" value="${basedir}/imports" />
+
+        <property name="version" value="dev" />
+        <property name="deployPluginArchiveName" value="releases/IBM-MaaS360-UCD-v${version}.zip" />
 
         <!-- ================================================================== -->
         <!-- PATHS                                                              -->
@@ -78,6 +77,7 @@
             <mkdir dir="${build.dir}/classes"/>
             <copy todir="${build.dir}/classes">
                 <fileset dir="${src.dir}/groovy">
+                    <include name="**/*.groovy" />
                 </fileset>
             </copy>
 

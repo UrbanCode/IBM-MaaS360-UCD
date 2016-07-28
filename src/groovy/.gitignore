@@ -1,0 +1,10 @@
+# ignore all dotfiles by except git and travis specific ones
+.*
+!.gitignore
+!.git*
+!.travis.yml
+
+# ignore compilation related directories in the root of the project
+/build
+/releases
+/lib
