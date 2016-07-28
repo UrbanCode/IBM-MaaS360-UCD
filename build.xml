@@ -1,34 +1,34 @@
 <!--
 
 /**
- * © Copyright IBM Corporation 2016.  
+ * © Copyright IBM Corporation 2016.
  * This is licensed under the following license.
  * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
- * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+ * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
  */
 
 -->
 
-	<project name="plugin-mobilefirst-MaaS360" default="main" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+    <project name="plugin-mobilefirst-MaaS360" default="main" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-		<property name="project" value="" />
+        <property name="project" value="" />
         <property name="version" value="dev" />
-		<property name="deployPluginArchiveName" value="releases/IBM-MaaS360-UCD-v${version}.zip" />
+        <property name="deployPluginArchiveName" value="releases/IBM-MaaS360-UCD-v${version}.zip" />
 
-		<property name="src.dir" value="${basedir}/src" />
-		<property name="build.dir" value="${basedir}/build" />
-		<property name="plugin.dir" value="${basedir}/plugin" />
-		<property name="license.dir" value="${basedir}/license" />
-		<property name="doc.dir" value="${basedir}/doc" />
-		<property name="bin.dir" value="${basedir}/bin" />
-		<property name="lib.dir" value="${basedir}/lib" />
-		<property name="lib.build.dir" value="${lib.dir}/build" />
-		<property name="lib.build.classes.dir" value="${lib.build.dir}/classes" />
-		<property name="lib.test.dir" value="${lib.dir}/test" />
-		<property name="scripts.dir" value="${basedir}/scripts" />
-		<property name="imports.dir" value="${basedir}/imports" />
-        
-		<!-- ================================================================== -->
+        <property name="src.dir" value="${basedir}/src" />
+        <property name="build.dir" value="${basedir}/build" />
+        <property name="plugin.dir" value="${basedir}/plugin" />
+        <property name="license.dir" value="${basedir}/license" />
+        <property name="doc.dir" value="${basedir}/doc" />
+        <property name="bin.dir" value="${basedir}/bin" />
+        <property name="lib.dir" value="${basedir}/lib" />
+        <property name="lib.build.dir" value="${lib.dir}/build" />
+        <property name="lib.build.classes.dir" value="${lib.build.dir}/classes" />
+        <property name="lib.test.dir" value="${lib.dir}/test" />
+        <property name="scripts.dir" value="${basedir}/scripts" />
+        <property name="imports.dir" value="${basedir}/imports" />
+
+        <!-- ================================================================== -->
         <!-- PATHS                                                              -->
         <!-- ================================================================== -->
         <path id="classpath">
@@ -36,7 +36,7 @@
                 <include name="*.jar"/>
             </fileset>
         </path>
-    
+
         <path id="classpath.build">
             <fileset dir="${lib.build.dir}">
                 <include name="*.jar"/>
@@ -47,75 +47,75 @@
         <!-- =================================================== -->
         <!-- MAIN TARGET                             -->
         <!-- =================================================== -->
-		<target name="main" depends="clean, resolve, build, dist" />
-				
-		<!-- Copy in the dependencies -->
-		<target name="build" depends="resolve, compile-classes">
+        <target name="main" depends="clean, resolve, build, dist" />
 
-			<!-- Copy inputs (info, upgrade, plugin) -->
-			<copy todir="${build.dir}">
-				<fileset dir="${plugin.dir}">
-				</fileset>
-			</copy>
-			
-            <!-- Copy Scripts -->
-			<copy todir="${build.dir}">
-				<fileset dir="${src.dir}">
-                    <exclude name="**/java/" />
-                    <exclude name="**/groovy/" />
-				</fileset>
-			</copy>	
+        <!-- Copy in the dependencies -->
+        <target name="build" depends="resolve, compile-classes">
 
-			<!-- Copy License -->
-			<mkdir dir="${build.dir}/license"/>
-			<copy todir="${build.dir}/license">
-				<fileset dir="${license.dir}">
-					<include name="EPL.txt" />
-				</fileset>
-			</copy>
-			
-			<!-- Copy Groovy Classes -->
-			<mkdir dir="${build.dir}/classes"/>
-			<copy todir="${build.dir}/classes">
-                <fileset dir="${src.dir}/groovy">                  
+            <!-- Copy inputs (info, upgrade, plugin) -->
+            <copy todir="${build.dir}">
+                <fileset dir="${plugin.dir}">
                 </fileset>
             </copy>
 
-			<mkdir dir="${build.dir}/lib"/>
+            <!-- Copy Scripts -->
+            <copy todir="${build.dir}">
+                <fileset dir="${src.dir}">
+                    <exclude name="**/java/" />
+                    <exclude name="**/groovy/" />
+                </fileset>
+            </copy>
+
+            <!-- Copy License -->
+            <mkdir dir="${build.dir}/license"/>
+            <copy todir="${build.dir}/license">
+                <fileset dir="${license.dir}">
+                    <include name="EPL.txt" />
+                </fileset>
+            </copy>
+
+            <!-- Copy Groovy Classes -->
+            <mkdir dir="${build.dir}/classes"/>
+            <copy todir="${build.dir}/classes">
+                <fileset dir="${src.dir}/groovy">
+                </fileset>
+            </copy>
+
+            <mkdir dir="${build.dir}/lib"/>
             <!-- Copy Libraries -->
-			<copy todir="${build.dir}/lib">
-				<fileset dir="${lib.dir}">
+            <copy todir="${build.dir}/lib">
+                <fileset dir="${lib.dir}">
                     <exclude name="**/build/" />
                     <exclude name="**javadoc.jar" />
                     <exclude name="**sources.jar" />
                 </fileset>
-			</copy>
-			
-		</target>
+            </copy>
 
-		<!-- Build the actual zip file that gets uploaded to uDeploy -->
-		<target name="dist" depends="resolve">
-			<zip destfile="${deployPluginArchiveName}" basedir="${build.dir}" update="false"/>
-		</target>
+        </target>
 
-		<!-- Clean up the build directory -->
-		<target name="clean">
-			<delete dir="build" />
-			<mkdir dir="build" />
-			<delete file="${deployPluginArchiveName}" />
+        <!-- Build the actual zip file that gets uploaded to uDeploy -->
+        <target name="dist" depends="resolve">
+            <zip destfile="${deployPluginArchiveName}" basedir="${build.dir}" update="false"/>
+        </target>
+
+        <!-- Clean up the build directory -->
+        <target name="clean">
+            <delete dir="build" />
+            <mkdir dir="build" />
+            <delete file="${deployPluginArchiveName}" />
             <delete dir="${lib.build.classes.dir}" />
-		</target>
-            
+        </target>
+
         <!-- =================================================== -->
         <!-- COMPILE TARGETS                                     -->
         <!-- =================================================== -->
-        <target name="compile-classes" description="Compile Java classes." depends="resolve">  
+        <target name="compile-classes" description="Compile Java classes." depends="resolve">
             <mkdir dir="${lib.build.classes.dir}"/>
             <javac srcdir="${src.dir}/java" destdir="${lib.build.classes.dir}" includeantruntime="false">
                 <include name="**/*.java"/>
                 <classpath refid="classpath.build"/>
             </javac>
-			<jar destfile="${build.dir}/lib/mobilefirst-fiberlink.jar" basedir="${lib.build.classes.dir}" />
+            <jar destfile="${build.dir}/lib/mobilefirst-fiberlink.jar" basedir="${lib.build.classes.dir}" />
         </target>
 
         <!-- Retreive all required dependencies from maven repository -->
@@ -145,4 +145,4 @@
             <get dest="${user.home}/.ant/lib/ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar"/>
             <fail message="Ivy has been installed. Run the build again"/>
         </target>
-	</project>
+    </project>
