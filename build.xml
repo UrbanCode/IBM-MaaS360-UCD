@@ -8,7 +8,7 @@
  */
 
 -->
-
+        
     <project name="plugin-mobilefirst-MaaS360" default="main" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
         <property name="src.dir" value="${basedir}/src" />
@@ -141,8 +141,9 @@
         <!-- Install Ivy -->
         <available classname="org.apache.ivy.Main" property="ivy.installed"/>
         <target name="install-ivy" description="Install ivy" unless="ivy.installed">
-            <mkdir dir="${user.home}/.ant/lib"/>
-            <get dest="${user.home}/.ant/lib/ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar"/>
-            <fail message="Ivy has been installed. Run the build again"/>
+            <property name="antHome" value="${user.home}${file.separator}.ant"/>
+            <mkdir dir="${antHome}"/>
+            <get dest="${antHome}${file.separator}lib${file.separator}ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar"/>
+            <fail message="SUCCESS! Ivy has been installed in ${antHome}. Run the build again.${line.separator}Note: If you get this message more than once, trying specify your Ant's home directory with the flag: ant -DantHome='ant/home/directory/here'" />
         </target>
     </project>
