@@ -1,0 +1,46 @@
+<!--
+
+/**
+ * © Copyright IBM Corporation 2014.  
+ * This is licensed under the following license.
+ * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
+ * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+ */
+
+-->
+
+	<project name="plugin-mobilefirst-MaaS360" default="main" basedir=".">
+
+		<!--<dirname property="example" file="${ant.file.example}" />-->
+		<dirname property="workspace" file="${example}" />
+
+		<!-- assumes the build.properties is set via the command line ANT invocation -->
+		<!--<property name="build.properties" value="build.properties" />-->
+		<property file="${workspace}/builder/ant-common/${build.properties}" />
+
+		<property name="project" value="" />
+
+		<property name="src.dir" value="${basedir}/src" />
+		<property name="build.dir" value="${basedir}/build" />
+		<property name="bin.dir" value="${build.dir}/bin" />
+		<property name="lib.dir" value="${basedir}/lib" />
+		
+		<target name="main" depends="compileBinary" />
+		
+		<path id="classpath.build">
+				<fileset dir="${workspace}">
+					<include name="lib/**/*.jar" />
+				</fileset>
+		</path>
+		
+		<target name="compileBinary">
+			<mkdir dir="${bin.dir}" />
+			<javac debug="true" destdir="${build.dir}/bin" target="1.6" source="1.6">
+				<src path="${src.dir}/java" />
+				<classpath refid="classpath.build" />
+			</javac>
+			<jar destfile="${lib.dir}/mobilefirst-fiberlink.jar" basedir="${build.dir}/bin" />
+			<delete dir="${bin.dir}" />
+		</target>
+
+	</project>
