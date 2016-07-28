@@ -11,13 +11,6 @@
 
 	<project name="plugin-mobilefirst-MaaS360" default="main" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-		<!--<dirname property="example" file="${ant.file.example}" />-->
-		<dirname property="workspace" file="${example}" />
-
-		<!-- assumes the build.properties is set via the command line ANT invocation -->
-		<!--<property name="build.properties" value="build.properties" />-->
-		<property file="${workspace}/builder/ant-common/${build.properties}" />
-
 		<property name="project" value="" />
         <property name="version" value="dev" />
 		<property name="deployPluginArchiveName" value="releases/IBM-MaaS360-UCD-v${version}.zip" />
@@ -29,19 +22,35 @@
 		<property name="doc.dir" value="${basedir}/doc" />
 		<property name="bin.dir" value="${basedir}/bin" />
 		<property name="lib.dir" value="${basedir}/lib" />
+		<property name="lib.build.dir" value="${lib.dir}/build" />
+		<property name="lib.build.classes.dir" value="${lib.build.dir}/classes" />
+		<property name="lib.test.dir" value="${lib.dir}/test" />
 		<property name="scripts.dir" value="${basedir}/scripts" />
 		<property name="imports.dir" value="${basedir}/imports" />
-		
+        
+		<!-- ================================================================== -->
+        <!-- PATHS                                                              -->
+        <!-- ================================================================== -->
+        <path id="classpath">
+            <fileset dir="${lib.dir}">
+                <include name="*.jar"/>
+            </fileset>
+        </path>
+    
+        <path id="classpath.build">
+            <fileset dir="${lib.build.dir}">
+                <include name="*.jar"/>
+            </fileset>
+            <path refid="classpath"/>
+        </path>
+
+        <!-- =================================================== -->
+        <!-- MAIN TARGET                             -->
+        <!-- =================================================== -->
 		<target name="main" depends="clean, resolve, build, dist" />
-		
-		<path id="classpath.build">
-				<fileset dir="${workspace}">
-					<include name="lib/**/*.jar" />
-				</fileset>
-		</path>
 				
 		<!-- Copy in the dependencies -->
-		<target name="build" depends="resolve">
+		<target name="build" depends="resolve, compile-classes">
 
 			<!-- Copy inputs (info, upgrade, plugin) -->
 			<copy todir="${build.dir}">
@@ -51,29 +60,32 @@
 			
             <!-- Copy Scripts -->
 			<copy todir="${build.dir}">
-				<fileset dir="${src.dir}">					
+				<fileset dir="${src.dir}">
+                    <exclude name="**/java/" />
+                    <exclude name="**/groovy/" />
 				</fileset>
-			</copy>
-			
-			<!-- Copy Groovy classes -->
-			<mkdir dir="${build.dir}/classes"/>
-			<copy todir="${build.dir}/classes">
-                <fileset dir="${src.dir}/classes">                  
-                </fileset>
-            </copy>
-            
-			<!-- copy license -->
+			</copy>	
+
+			<!-- Copy License -->
 			<mkdir dir="${build.dir}/license"/>
 			<copy todir="${build.dir}/license">
 				<fileset dir="${license.dir}">
 					<include name="EPL.txt" />
 				</fileset>
 			</copy>
+			
+			<!-- Copy Groovy Classes -->
+			<mkdir dir="${build.dir}/classes"/>
+			<copy todir="${build.dir}/classes">
+                <fileset dir="${src.dir}/groovy">                  
+                </fileset>
+            </copy>
 
 			<mkdir dir="${build.dir}/lib"/>
-            <!-- copy libs -->
+            <!-- Copy Libraries -->
 			<copy todir="${build.dir}/lib">
 				<fileset dir="${lib.dir}">
+                    <exclude name="**/build/" />
                     <exclude name="**javadoc.jar" />
                     <exclude name="**sources.jar" />
                 </fileset>
@@ -91,7 +103,20 @@
 			<delete dir="build" />
 			<mkdir dir="build" />
 			<delete file="${deployPluginArchiveName}" />
+            <delete dir="${lib.build.classes.dir}" />
 		</target>
+            
+        <!-- =================================================== -->
+        <!-- COMPILE TARGETS                                     -->
+        <!-- =================================================== -->
+        <target name="compile-classes" description="Compile Java classes." depends="resolve">  
+            <mkdir dir="${lib.build.classes.dir}"/>
+            <javac srcdir="${src.dir}/java" destdir="${lib.build.classes.dir}" includeantruntime="false">
+                <include name="**/*.java"/>
+                <classpath refid="classpath.build"/>
+            </javac>
+			<jar destfile="${build.dir}/lib/mobilefirst-fiberlink.jar" basedir="${lib.build.classes.dir}" />
+        </target>
 
         <!-- Retreive all required dependencies from maven repository -->
         <target name="resolve" depends="install-ivy" unless="resolve.no" description="Resolve all dependencies">
