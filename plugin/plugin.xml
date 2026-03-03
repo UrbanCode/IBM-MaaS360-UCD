@@ -254,7 +254,7 @@
   		<value label="No">No</value>
       </property>
       <property name="showInADP" required="true">
-        <property-ui description="Relevant only If App Discovery Portal is enabled for the account" label="Show in App Discovery Portal" type="selectBox" default-value="No"/>
+        <property-ui description="Relevant only If App Discovery Portal is enabled for the account" label="Show in App Discovery Portal" type="selectBox" default-value="0"/>
         <value label="0: Not Available">0</value>
   		<value label="1: View Only">1</value>
   		<value label="2: View and Request">2</value>

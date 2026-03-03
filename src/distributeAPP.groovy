@@ -73,7 +73,7 @@
  
  //Create Request
  try{
-	 request.createRequest((auth_token, url, WebServices.DistributeAppURI.getURL(), 1, billing_id, parametersObjectList)
+	 request.createRequest(auth_token, url, WebServices.DistributeAppURI.getURL(), 1, billing_id, parametersObjectList)
  } catch (Exception e){
 	 println e.getMessage();
 	 println e.printStackTrace();

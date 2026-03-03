@@ -1,0 +1,140 @@
+/*
+ * © Copyright IBM Corporation 2016.
+ * This is licensed under the following license.
+ * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
+ * U.S. Government Users Restricted Rights: Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+group = 'com.ibm.urbancode.plugins'
+version = project.hasProperty('pluginVersion') ? project.getProperty('pluginVersion') : 'dev'
+
+defaultTasks 'dist'
+
+def deployPluginArchiveName = "releases/IBM-MaaS360-UCD-v${version}.zip"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.ibm.urbancode.plugins:groovy-plugin-utils:1.0'
+    implementation 'commons-codec:commons-codec:1.3'
+    implementation 'commons-httpclient:commons-httpclient:3.1'
+    implementation 'commons-logging:commons-logging:1.1'
+    implementation 'xml-apis:xml-apis:1.4.01'
+    implementation 'xml-resolver:xml-resolver:1.2'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/java']
+        }
+        groovy {
+            srcDirs = ['src/groovy']
+        }
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.register('cleanBuild') {
+    group = 'build'
+    description = 'Clean the build directory'
+    doLast {
+        delete 'build'
+        mkdir 'build'
+        delete deployPluginArchiveName
+    }
+}
+
+tasks.register('mobilefirstJar', Jar) {
+    group = 'build'
+    description = 'Create mobilefirst-fiberlink.jar from compiled Java classes'
+    dependsOn 'compileJava'
+    archiveFileName = 'mobilefirst-fiberlink.jar'
+    destinationDirectory = file("${buildDir}/plugin/lib")
+    from sourceSets.main.output.classesDirs
+}
+
+tasks.register('copyPluginFiles', Copy) {
+    group = 'build'
+    description = 'Copy plugin files to build directory'
+    from('plugin') {
+        include '**/*'
+    }
+    into "${buildDir}/plugin"
+}
+
+tasks.register('copyScripts', Copy) {
+    group = 'build'
+    description = 'Copy scripts to build directory'
+    from('src') {
+        exclude '**/java/**'
+        exclude '**/groovy/**'
+    }
+    into "${buildDir}/plugin"
+}
+
+tasks.register('copyLicense', Copy) {
+    group = 'build'
+    description = 'Copy license files to build directory'
+    from('license') {
+        include 'EPL.txt'
+    }
+    into "${buildDir}/plugin/license"
+}
+
+tasks.register('copyGroovyClasses', Copy) {
+    group = 'build'
+    description = 'Copy Groovy classes to build directory'
+    from('src/groovy') {
+        include '**/*.groovy'
+    }
+    into "${buildDir}/plugin/classes"
+}
+
+tasks.register('copyLibraries', Copy) {
+    group = 'build'
+    description = 'Copy dependencies to build/lib directory'
+    from(configurations.runtimeClasspath) {
+        exclude '**/*javadoc.jar'
+        exclude '**/*sources.jar'
+    }
+    into "${buildDir}/plugin/lib"
+}
+
+tasks.register('buildPlugin') {
+    group = 'build'
+    description = 'Build the plugin (equivalent to Ant build target)'
+    dependsOn 'compileJava', 'mobilefirstJar', 'copyPluginFiles', 'copyScripts', 'copyLicense', 'copyGroovyClasses', 'copyLibraries'
+}
+
+tasks.register('dist', Zip) {
+    group = 'build'
+    description = 'Create the plugin distribution zip file'
+    dependsOn 'buildPlugin'
+    
+    archiveFileName = "IBM-MaaS360-UCD-v${version}.zip"
+    destinationDirectory = file('releases')
+    from "${buildDir}/plugin"
+}
+
+tasks.named('build') {
+    dependsOn 'dist'
+}
+
+clean {
+    delete 'releases'
+    delete fileTree('lib') {
+        exclude 'build/**'
+    }
+}
