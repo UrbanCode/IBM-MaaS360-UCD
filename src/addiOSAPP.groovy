@@ -34,18 +34,13 @@ final def workDir = new File('.').canonicalFile
 def url = props['url']
 def billing_id = props['billing_id']
 def maas360hosted = props['maas360hosted']
-def account_name = props['account_name']
-def username = props['username']
-def password = props['password']
 def app_source = props['app_source']
 def removeApp = props['removeApp']
 def restrictDataBackup = props['restrictDataBackup']
 def showInADP = props['showInADP']
 def appOwner = props['appOwner']
-def app_bundle_id = props['app_bundle_id']
 def app_description = props['app_description']
 def app_category = props['app_category']
-def app_attributes = props['app_attribute']
 def auth_token = props['auth_token']
 
 def outFileName = props['outFile']
@@ -64,7 +59,6 @@ WebServiceRequest request = new WebServiceRequest()
 LinkedHashMap<String, String> p = new LinkedHashMap<String, String>()
 //Default for program is Yes. Value defaulted in plugin.xml
 p.put("maas360hosted", maas360hosted)
-p.put("appSourceURL", "")
 if (app_description) {
 	p.put("description", app_description)
 }
@@ -75,9 +69,6 @@ if (app_category) {
 p.put("removeApp", removeApp)
 //Default for program is No. Value defaulted in plugin.xml
 p.put("restrictDataBackup", restrictDataBackup)
-if (app_attributes) {
-	p.put("appAttributes", app_attributes)
-}
 //Handle Optional App Discovery Portal options
 p.put("showInADP", showInADP)
 if ((showInADP == "1" || showInADP == "2") && appOwner) {
@@ -101,13 +92,6 @@ Hashtable<String, String> headersList = new Hashtable<String, String>()
 headersList.put("Accept", "application/xml")
 
 Hashtable<String, String> paramsList = new Hashtable<String, String>()
-paramsList.put("accountType", "Customer")
-paramsList.put("accountName", account_name)
-paramsList.put("adminEmailAddress", "")
-paramsList.put("billingID", billing_id)
-paramsList.put("appID", app_bundle_id)
-paramsList.put("userName", username)
-paramsList.put("password", password)
 
 parametersObjectList.put("headers", headersList)
 parametersObjectList.put("parameters", paramsList)

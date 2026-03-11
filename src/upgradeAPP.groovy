@@ -34,16 +34,16 @@ final def workDir = new File('.').canonicalFile
 
 def url = props['url']
 def billing_id = props['billing_id']
-def account_name = props['account_name'] //TestFLK_IBM_MobileCoC
-def username = props['username']
-def password = props['password']
+// def account_name = props['account_name'] //TestFLK_IBM_MobileCoC
+// def username = props['username']
+// def password = props['password']
 def maas360hosted = props['maas360hosted']
 def app_type = props['app_type']
 def app_source = props['app_source']
 def app_bundle_id = props['app_bundle_id']
 def maintain_as_additional_version = props['maintain_as_additional_version']
 def app_version = props['app_version']
-def app_attributes = props['app_attribute']
+//def app_attributes = props['app_attribute']
 def outFileName = props['outFile']
 def outFile
 if (outFileName) {
@@ -67,9 +67,9 @@ if (app_version) {
 	p.put("appVersion", app_version)
 }
 p.put("maintainAsAdditionalVersion", maintain_as_additional_version)
-if (app_attributes) {
-	p.put("appAttributes", app_attributes)
-}
+// if (app_attributes) {
+// 	p.put("appAttributes", app_attributes)
+// }
 
 String xml = request.createTemplateXML("appDetails",p)
 
@@ -85,13 +85,6 @@ Hashtable<String, String> headersList = new Hashtable<String, String>()
 headersList.put("Accept", "application/xml")
 
 Hashtable<String, String> paramsList = new Hashtable<String, String>()
-paramsList.put("accountType", "Customer")
-paramsList.put("accountName", account_name)
-paramsList.put("adminEmailAddress", "")
-paramsList.put("billingID", billing_id)
-paramsList.put("appID", app_bundle_id)
-paramsList.put("userName", username)
-paramsList.put("password", password)
 
 parametersObjectList.put("headers", headersList)
 parametersObjectList.put("parameters", paramsList)

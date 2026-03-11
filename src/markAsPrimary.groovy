@@ -54,7 +54,7 @@ WebServiceRequest request = new WebServiceRequest()
 Hashtable<String, Object> parametersObjectList = new Hashtable<String, Object>()
 
 Hashtable<String, String> headersList = new Hashtable<String, String>()
-headersList.put("Accept", "application/x-www-form-urlencoded")
+headersList.put("Accept", "application/xml")
 
 Hashtable<String, String> paramsList = new Hashtable<String, String>()
 paramsList.put("appType", app_type);
@@ -66,7 +66,7 @@ parametersObjectList.put("parameters", paramsList)
 
 //Create Request
 try{
-	request.createRequest((auth_token, url, WebServices.MarkAsPrimary.getURL(), 1, billing_id, parametersObjectList)
+	request.createRequest(auth_token, url, WebServices.MarkAsPrimary.getURL(), 1, billing_id, parametersObjectList)
 } catch (Exception e){
 	println e.getMessage();
 	println e.printStackTrace();

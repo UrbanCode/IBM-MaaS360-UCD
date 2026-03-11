@@ -35,33 +35,40 @@ public class Authenticator
      * Description: Handle sending of request
      * @param post: the object to send
      */
-	private final void sendRequest(PostMethod post) {
-		try {
-			HttpClient client = new HttpClient();
-			int statusCode = client.executeMethod(post);
-			System.out.println("------------------------------------Begin Debug: Request Headers----------------------------------------------------------\n");
-			Header[] requestHeaders = post.getRequestHeaders();
-			for(int cn = 0;cn<requestHeaders.length;cn++) {
-				System.out.println(requestHeaders[cn].toString());
-			}
-			System.out.println("------------------------------------Begin Debug: Response Headers----------------------------------------------------------\n");
-			Header[] responseHeaders = post.getResponseHeaders();
-			for(int cn = 0;cn<responseHeaders.length;cn++) {
-				System.out.println(responseHeaders[cn].toString());
-			}
-			System.out.println("------------------------------------End Debug----------------------------------------------------------\n");
-			if (statusCode != HttpStatus.SC_OK) {
-				System.out.println("POST method failed: "
-						+ post.getStatusLine());
-			} else {
-				System.out.println("POST method succeeded: "
-						+ post.getStatusLine());
-				String httpResponse = post.getResponseBodyAsString();
-				System.out.println(httpResponse);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	private final void sendRequest(PostMethod post) throws Exception {
+		HttpClient client = new HttpClient();
+		int statusCode = client.executeMethod(post);
+
+		
+		// Check HTTP status first
+		if (statusCode != HttpStatus.SC_OK) {
+			throw new Exception("HTTP request failed with status: " + post.getStatusLine());
 		}
+		
+		// Get the response body
+		String httpResponse = post.getResponseBodyAsString();
+		System.out.println("API Response: " + httpResponse);
+		
+		// Validate credentials
+		if (httpResponse != null) {
+			// Check for HTML login page error (wrong credentials returns HTML, not XML)
+			if (httpResponse.contains("username or password you have entered is incorrect") 
+					|| httpResponse.contains("account is locked")) {
+				throw new Exception("LOGIN FAILED: URL must be https://services.m4.maas360.com");
+			}
+			
+			// Check for XML errorCode (non-zero = failure)
+			if (httpResponse.contains("<errorCode>") && !httpResponse.contains("<errorCode>0</errorCode>")) {
+				throw new Exception("LOGIN FAILED: Invalid credentials. Check username/password and other parameters.");
+			}
+			
+			// Check if response is HTML instead of expected XML (indicates auth failure)
+			if (httpResponse.contains("<!DOCTYPE html>") && !httpResponse.contains("<authToken>")) {
+				throw new Exception("LOGIN FAILED: Received HTML login page instead of auth token. Credentials may be invalid.");
+			}
+		}
+		
+		System.out.println("Authentication completed successfully.");
 	}
 
 	/**
@@ -91,17 +98,11 @@ public class Authenticator
      * @param billing_id: the unique billing ID for the Fiberlink Customer
      * @return: PostMethod
      */	
-	public void createAndSendRequest(String xml, String url_auth, String billing_id) {
+	public void createAndSendRequest(String xml, String url_auth, String billing_id) throws Exception {
 		PostMethod post = new PostMethod(url_auth + billing_id + "/");
-		try {
-			RequestEntity requestEntity = new StringRequestEntity(xml,
-					"application/xml", "UTF-8");
-			post.setRequestEntity(requestEntity);
-			post.addRequestHeader("Accept", "application/xml");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		RequestEntity requestEntity = new StringRequestEntity(xml, "application/xml", "UTF-8");
+		post.setRequestEntity(requestEntity);
+		post.addRequestHeader("Accept", "application/xml");
 		sendRequest(post);
 	}
 }

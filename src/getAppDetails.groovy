@@ -61,7 +61,7 @@ try{
 } catch (Exception e){
 	println e.getMessage();
 	println e.printStackTrace();
-	System.exit 1
+	System.exit(1)
 }
 
-System.exit 0
+System.exit(0)

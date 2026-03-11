@@ -87,6 +87,11 @@ public class WebServiceRequest {
 				System.out.println("------------------------------------Response Start----------------------------------------------------------\n");
 				System.out.println(responseBody+"\n");
 				System.out.println("------------------------------------Resoonse End----------------------------------------------------------");
+				if (responseBody != null) {
+					if (responseBody.contains("<status>Failure</status>") || responseBody.contains("<description>App not found</description>")) {
+						throw new Exception("App Details not valid");
+					}
+				}
 				if(null == jsessionId) {
 					for(int cnt=0;cnt<responseHeaders.length;cnt++) {
 //						System.out.println(headers[cnt].toString());
@@ -119,7 +124,7 @@ public class WebServiceRequest {
 	 * @param parametersObjectList: Map containing option parameters, headers and multi-part object
 	 * @throws Exception
 	 */
-	public void createRequest(String authToken, String baseURL, String webServiceName, int methodType, String billingId, Hashtable<String, Object> parametersObjectList, String ...strings ) {
+	public void createRequest(String authToken, String baseURL, String webServiceName, int methodType, String billingId, Hashtable<String, Object> parametersObjectList, String ...strings ) throws Exception {
 		try {
 			String apiVersion;
 			if (strings.length>0){
@@ -163,7 +168,12 @@ public class WebServiceRequest {
 					System.out.println(">>>Sending GET Request");
 					sendRequest(getMethod, "");
 					break;
-				case 1: postMethod = new PostMethod(uri);
+				case 1: 
+					// Setting PARAMETERS to URL if any (same as GET)
+					if(0 != parameters.size()) {
+						uri = formulateGetURI(uri, parameters);
+					}
+					postMethod = new PostMethod(uri);
 					//Setting Required Authorization Header
 					System.out.println(">>>Generating POST Request");
 					postMethod.addRequestHeader("Authorization", "MaaS token=\""+authToken+"\"");
@@ -206,7 +216,8 @@ public class WebServiceRequest {
 				break;
 			}
 		} catch(Exception e) {
-			
+			e.printStackTrace();
+			throw new Exception("Request failed: " + e.getMessage());
 		}
 	}
 	
@@ -246,7 +257,8 @@ public class WebServiceRequest {
 			Enumeration<String> keys= params.keys();
 			while(keys.hasMoreElements()) {
 				String key = keys.nextElement();
-				postURI = postURI + key +"="+params.get(key)+"&"; 
+				String value = params.get(key).trim();
+				postURI = postURI + key +"="+value+"&"; 
 			}
 			postURI=(String) postURI.subSequence(0, postURI.length()-1);
 			newURI = URI + postURI.replaceAll(" ", "%20"); 

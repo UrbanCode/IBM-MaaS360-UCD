@@ -90,7 +90,7 @@ public enum WebServices {
 	MdNetworkInformation			("/device-apis/devices/api-version/mdNetworkInformation/"),
 	CellularDataUsage 				("/device-apis/devices/api-version/cellularDataUsage/"),
 	UpdateProvisioningProfileURI	("/application-apis/applications/api-version/updateProvisioningProfile/"),
-	MarkAsPrimary					("application-apis/applications/api-version/markAsPrimary/"), // New as of Jan 2016
+	MarkAsPrimary					("/application-apis/applications/api-version/markAsPrimary/"), // New as of Jan 2016
 	AppUploadRequestStatus			("/application-apis/applications/api-version/appUploadRequestStatus/");
 	
 	private final String url;
