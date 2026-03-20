@@ -12,7 +12,7 @@
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <header>
-    <identifier id="com.ibm.mobilefirst.MAAS360" name="IBM MaaS360" version="25"/>
+    <identifier id="com.ibm.mobilefirst.MAAS360" name="IBM MaaS360" version="26"/>
     <description>
       Various functionality related to integrating with MaaS360 via Web Services, such as authenticating, upgrading and retrieving app details.
 	  </description>
@@ -384,6 +384,231 @@
       <arg value="-cp"/>
       <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="markAsPrimary.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  <step-type name="Add iOS Mobile App Plus">
+    <description>Sends a WebService call to Add Enterprise iOS App Plus(apps more than 50 MB). Required to be MaaS360 Hosted for this Integration to work.</description>
+    <properties>
+      <property name="url" required="true">
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
+      </property>
+      <property name="billing_id" required="true">
+        <property-ui description="Billing Identifier - Available after customer enrolls with MaaS360." label="Billing ID" type="textBox"/>
+      </property>
+      <property name="maas360hosted" required="true">
+        <property-ui description="" label="MaaS360 Hosted" type="selectBox" default-value="Yes"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="auth_token" required="true">
+        <property-ui default-value="${p?:environment/auth_token}" description="Token provided by the authentication web service called" label="Auth Token" type="textBox"/>
+      </property>
+      <property name="app_source" required="true">
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Source" type="textBox"/>
+      </property>
+      <property name="app_description" required="true">
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Description" type="textAreaBox"/>
+      </property>
+      <property name="app_category" required="false">
+        <property-ui description="Comma separated list of Categories" label="Application Categories" type="textBox"/>
+      </property>
+      <property name="removeApp" required="true">
+        <property-ui description="" label="Remove App if under MDM" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="restrictDataBackup" required="true">
+        <property-ui description="" label="Restrict Data Backup to iTunes" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="showInADP" required="true">
+        <property-ui description="Relevant only If App Discovery Portal is enabled for the account" label="Show in App Discovery Portal" type="selectBox" default-value="0"/>
+        <value label="0: Not Available">0</value>
+  		<value label="1: View Only">1</value>
+  		<value label="2: View and Request">2</value>
+      </property>
+      <property name="appOwner" required="false">
+        <property-ui description="Email Address of the App Owner who needs to be intimated" label="Email for App Owner" type="textBox"/>
+      </property>
+      <property name="outFile">
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="addiOSAPPPlus.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  <step-type name="Add Android Mobile App">
+    <description>Sends a WebService call to Add Enterprise Android App. Required to be MaaS360 Hosted for this Integration to work.</description>
+    <properties>
+      <property name="url" required="true">
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
+      </property>
+      <property name="billing_id" required="true">
+        <property-ui description="Billing Identifier - Available after customer enrolls with MaaS360." label="Billing ID" type="textBox"/>
+      </property>
+      <property name="maas360hosted" required="true">
+        <property-ui description="" label="MaaS360 Hosted" type="selectBox" default-value="Yes"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="auth_token" required="true">
+        <property-ui default-value="${p?:environment/auth_token}" description="Token provided by the authentication web service called" label="Auth Token" type="textBox"/>
+      </property>
+      <property name="app_source" required="true">
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Source" type="textBox"/>
+      </property>
+      <property name="app_description" required="true">
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Description" type="textAreaBox"/>
+      </property>
+      <property name="app_category" required="false">
+        <property-ui description="Comma separated list of Categories" label="Application Categories" type="textBox"/>
+      </property>
+      <property name="removeAppMDMRemoval" required="true">
+        <property-ui description="" label="Remove app when MDM control is removed" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="removeAppSelWipe" required="true">
+        <property-ui description="" label="Remove app during selective wipe" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="enforceAuthentication" required="true">
+        <property-ui description="" label="Require user authentication to open the app" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="enforceCompliance" required="true">
+        <property-ui description="" label="Allow app only on compliant devices" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="instantInstall" required="true">
+        <property-ui description="" label="Install app automatically on devices" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="showInADP" required="true">
+        <property-ui description="Relevant only If App Discovery Portal is enabled for the account" label="Show in App Discovery Portal" type="selectBox" default-value="0"/>
+        <value label="0: Not Available">0</value>
+  		<value label="1: View Only">1</value>
+  		<value label="2: View and Request">2</value>
+      </property>
+      <property name="appOwner" required="false">
+        <property-ui description="Email Address of the App Owner who needs to be intimated" label="Email for App Owner" type="textBox"/>
+      </property>
+      <property name="outFile">
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="addAndroidApp.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+<step-type name="Add Android Mobile App Plus">
+    <description>Sends a WebService call to Add Enterprise Android App Plus(apps more than 50 MB). Required to be MaaS360 Hosted for this Integration to work.</description>
+    <properties>
+      <property name="url" required="true">
+        <property-ui description="The Root WS URL to send the HTTP call. Should look like https://services.fiberlink.com/. Get the URL for your MaaS instance from Fiberlink" label="URL" type="textBox"/>
+      </property>
+      <property name="billing_id" required="true">
+        <property-ui description="Billing Identifier - Available after customer enrolls with MaaS360." label="Billing ID" type="textBox"/>
+      </property>
+      <property name="maas360hosted" required="true">
+        <property-ui description="" label="MaaS360 Hosted" type="selectBox" default-value="Yes"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="auth_token" required="true">
+        <property-ui default-value="${p?:environment/auth_token}" description="Token provided by the authentication web service called" label="Auth Token" type="textBox"/>
+      </property>
+      <property name="app_source" required="true">
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Source" type="textBox"/>
+      </property>
+      <property name="app_description" required="true">
+        <property-ui description="The ipa/apk file to be uploaded." label="Application Description" type="textAreaBox"/>
+      </property>
+      <property name="app_category" required="false">
+        <property-ui description="Comma separated list of Categories" label="Application Categories" type="textBox"/>
+      </property>
+      <property name="removeAppMDMRemoval" required="true">
+        <property-ui description="" label="Remove app when MDM control is removed" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="removeAppSelWipe" required="true">
+        <property-ui description="" label="Remove app during selective wipe" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="enforceAuthentication" required="true">
+        <property-ui description="" label="Require user authentication to open the app" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="enforceCompliance" required="true">
+        <property-ui description="" label="Allow app only on compliant devices" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="instantInstall" required="true">
+        <property-ui description="" label="Install app automatically on devices" type="selectBox" default-value="No"/>
+        <value label="Yes">Yes</value>
+  		<value label="No">No</value>
+      </property>
+      <property name="showInADP" required="true">
+        <property-ui description="Relevant only If App Discovery Portal is enabled for the account" label="Show in App Discovery Portal" type="selectBox" default-value="0"/>
+        <value label="0: Not Available">0</value>
+  		<value label="1: View Only">1</value>
+  		<value label="2: View and Request">2</value>
+      </property>
+      <property name="appOwner" required="false">
+        <property-ui description="Email Address of the App Owner who needs to be intimated" label="Email for App Owner" type="textBox"/>
+      </property>
+      <property name="outFile">
+        <property-ui description="If a file name is provided, the response body will be written to that file. The file name is relative to the working directory." label="Output File" type="textBox"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/commons-httpclient-3.1.jar:lib/commons-codec-1.3.jar:lib/commons-logging-1.1.jar:lib/mobilefirst-fiberlink.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="addAndroidAppPlus.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
