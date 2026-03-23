@@ -89,4 +89,6 @@
 	</migrate>
     <migrate to-version="25">
     </migrate>
+	<migrate to-version="26">
+    </migrate>
 </plugin-upgrade>

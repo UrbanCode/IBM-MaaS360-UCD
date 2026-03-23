@@ -216,5 +216,10 @@
 	  <release-note plugin-version="25">
 		25.0.0 - Community GitHub Release
 	  </release-note>
+    <release-note plugin-version="25">
+		26.0 - Build fixes and API improvements
+		26.1 - Added new steps: [Add iOS Mobile App Plus], [Add Andoid Mobile App], [Add Andoid Mobile App Plus]
+		26.2 - Added support for iOS App Attributes
+	  </release-note>
   </release-notes>
 </pluginInfo>
