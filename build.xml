@@ -118,24 +118,9 @@
             <jar destfile="${build.dir}/lib/mobilefirst-fiberlink.jar" basedir="${lib.build.classes.dir}" />
         </target>
 
-        <!-- Retreive all required dependencies from maven repository -->
         <target name="resolve" depends="install-ivy" unless="resolve.no" description="Resolve all dependencies">
             <mkdir dir="${lib.dir}"/>
-            <ivy:cachepath pathid="${lib.dir}">
-                <!-- http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.ibm.urbancode.plugins%22 -->
-                <dependency org="com.ibm.urbancode.plugins" name="groovy-plugin-utils" rev="1.0" transitive="false" />
-                <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-                <dependency org="commons-codec" name="commons-codec" rev="1.3" transitive="false" />
-                <!-- https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
-                <dependency org="commons-httpclient" name="commons-httpclient" rev="3.1" transitive="false" />
-                <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
-                <dependency org="commons-logging" name="commons-logging" rev="1.1" transitive="false" />
-                <!-- https://mvnrepository.com/artifact/xml-apis/xml-apis -->
-                <dependency org="xml-apis" name="xml-apis" rev="1.4.01"/>
-                <!-- https://mvnrepository.com/artifact/xml-resolver/xml-resolver -->
-                <dependency org="xml-resolver" name="xml-resolver" rev="1.2"/>
-            </ivy:cachepath>
-            <ivy:retrieve />
+            <ivy:retrieve conf="default" pattern="${lib.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
         </target>
 
         <!-- Install Ivy -->

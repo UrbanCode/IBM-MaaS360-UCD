@@ -29,7 +29,7 @@ import com.mobilefirst.fiberlink.WebServices
 //Pull in properties from Plugin UI
 def apTool = new AirPluginTool(this.args[0], this.args[1])
 props = apTool.getStepProperties()
-final def workDir = new File('.').canonicalFile
+def workDir = new File('.').canonicalFile
 
 def url = props['url']
 def billing_id = props['billing_id']
